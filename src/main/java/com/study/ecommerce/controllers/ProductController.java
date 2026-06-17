@@ -1,0 +1,34 @@
+package com.study.ecommerce.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.study.ecommerce.dtos.ProductDto;
+import com.study.ecommerce.entities.Product;
+import com.study.ecommerce.services.ProductService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/products")
+public class ProductController {
+	
+	@Autowired
+	private ProductService productService;
+	
+//  ------------------------------------------------------------------
+//      POST - localhost:8080/products
+//   -------------------------------------------------------------------
+	@PostMapping
+	public ResponseEntity<ProductDto> addProduct(@Valid @RequestBody ProductDto product)
+	{
+		
+		return new ResponseEntity<ProductDto>(productService.addProduct(product),HttpStatus.CREATED);
+	}
+
+}
