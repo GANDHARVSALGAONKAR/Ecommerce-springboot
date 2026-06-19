@@ -1,9 +1,17 @@
 package com.study.ecommerce.controllers;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,4 +39,45 @@ public class ProductController {
 		return new ResponseEntity<ProductDto>(productService.addProduct(product),HttpStatus.CREATED);
 	}
 
+//  ------------------------------------------------------------------
+//   GET - localhost:8080/products
+//  -------------------------------------------------------------------
+	
+	@GetMapping
+	public ResponseEntity<List<ProductDto>> getAllProduct()
+	{
+		return ResponseEntity.ok(productService.getAllProduct());
+	}
+	
+//  ------------------------------------------------------------------
+//  GET - localhost:8080/products/{id}
+// -------------------------------------------------------------------
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<ProductDto> getProductById(@PathVariable Integer id)
+	{
+		return ResponseEntity.ok(productService.getProductById(id));
+	}
+	
+//  ------------------------------------------------------------------
+//  DELETE - localhost:8080/products/{id}
+// -------------------------------------------------------------------
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Map<String,String>> deleteProduct(@PathVariable Integer id)
+	{
+		productService.deleteProduct(id);
+		HashMap<String, String> response = new HashMap<String, String>();	
+		response.put("message", "product deleted succesfully");
+		return ResponseEntity.ok(response) ;
+	}
+	
+//  ------------------------------------------------------------------
+//  PUT - localhost:8080/products/{id}
+// -------------------------------------------------------------------
+	@PutMapping("/{id}")
+	public ResponseEntity<ProductDto> updateProduct(@PathVariable Integer id,@RequestBody ProductDto productDto)
+	{
+		return ResponseEntity.ok(productService.updateProduct(id, productDto));
+	}
 }

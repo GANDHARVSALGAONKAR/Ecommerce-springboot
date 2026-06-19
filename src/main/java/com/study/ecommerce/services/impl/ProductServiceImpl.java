@@ -31,25 +31,47 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<ProductDto> getAllProduct() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//		findAll returns all products from products table
+	     List<Product> products = productRepository.findAll();
+	     
+//	     Conversion of entity list to dto list
+	     List<ProductDto> productDtoList = products.stream()
+	     .map((p)->modelMapper.map(p, ProductDto.class))
+	     .toList();
+	     
+		return productDtoList;
+	} 
 
 	@Override
 	public ProductDto getProductById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Product product = productRepository.findById(id)
+		.orElseThrow(()->new RuntimeException("Id not found"));
+		
+		return modelMapper.map(product, ProductDto.class);
 	}
 
 	@Override
 	public ProductDto updateProduct(Integer id, ProductDto productDto) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Product product = productRepository.findById(id)
+		.orElseThrow(()->new RuntimeException("Id not found"));
+		
+		product.setName(productDto.getName());
+		product.setDescription(productDto.getDescription());
+		product.setPrice(productDto.getPrice());
+		
+		Product updatedProduct = productRepository.save(product);
+		
+		return modelMapper.map(updatedProduct, ProductDto.class);
 	}
 
 	@Override
 	public void deleteProduct(Integer id) {
-		// TODO Auto-generated method stub
+		Product product = productRepository.findById(id)
+		.orElseThrow(()->new RuntimeException("Id not found"));
+		
+		productRepository.delete(product);
 		
 	}
 	
