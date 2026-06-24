@@ -3,6 +3,8 @@ package com.study.ecommerce.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,5 +29,6 @@ public class Category {
 	private String name;
 	
 	@OneToMany(mappedBy = "category")
+	@JsonBackReference
 	private List<Product> products;
 }
