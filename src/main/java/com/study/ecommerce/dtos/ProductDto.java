@@ -27,4 +27,6 @@ public class ProductDto {
 	@Min(1)
 	private Integer price;
 	private Category category;
+	
+	private String imageUrl;
 }
