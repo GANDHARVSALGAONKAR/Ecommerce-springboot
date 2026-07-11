@@ -1,5 +1,12 @@
 package com.study.ecommerce.entities;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.study.ecommerce.enums.Role;
 
 import jakarta.persistence.Column;
@@ -17,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class User {
+public class User implements UserDetails {
 
 	@Id                                                   //FOR PRIMARY KEY
 	@GeneratedValue(strategy=GenerationType.UUID)
@@ -37,5 +44,23 @@ public class User {
 	
 	@Enumerated(EnumType.STRING)
 	private Role role;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		return Arrays.asList(new SimpleGrantedAuthority(role.toString()));
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return email;
+	}
+	
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return password;
+	}
 	
 }
