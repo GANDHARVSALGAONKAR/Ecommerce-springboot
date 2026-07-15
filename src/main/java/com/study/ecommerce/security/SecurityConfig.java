@@ -40,7 +40,7 @@ public class SecurityConfig {
 		.cors(Customizer.withDefaults())
 		.authorizeHttpRequests(request->
 		request
-		.requestMatchers(HttpMethod.GET,"/products/**").permitAll()
+		.requestMatchers(HttpMethod.GET,"/products/**","/categories").permitAll()
 		.requestMatchers(HttpMethod.POST,"/users","/auth/login").permitAll()
 		.requestMatchers(HttpMethod.POST,"/products","/categories")
 		.hasRole("ADMIN")
