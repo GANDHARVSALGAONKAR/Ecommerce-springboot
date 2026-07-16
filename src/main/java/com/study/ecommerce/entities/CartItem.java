@@ -1,5 +1,7 @@
 package com.study.ecommerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,5 +27,6 @@ public class CartItem {
 	private Integer quantity;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Cart cart;
 }
