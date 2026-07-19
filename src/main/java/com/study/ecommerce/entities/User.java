@@ -2,6 +2,7 @@ package com.study.ecommerce.entities;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +17,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,6 +50,9 @@ public class User implements UserDetails {
 	
 	@OneToOne(mappedBy = "user")
 	private Cart cart;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Address> addresses;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
