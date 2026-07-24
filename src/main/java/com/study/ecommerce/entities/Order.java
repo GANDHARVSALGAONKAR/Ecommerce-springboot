@@ -1,6 +1,9 @@
 package com.study.ecommerce.entities;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -10,37 +13,39 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "orders")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Address {
-
+public class Order {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	private String fullName;
+	private Integer totalAmount;
+
+	private String status;
 	
-	private String phoneNo;
+	private String paymentStatus;
 	
-	private String addressLine;
-	
-	private String city;
-	
-	private String state;
-	
-	private String pincode;
+	@CreationTimestamp
+	private LocalDateTime createdAt;
 	
 	@ManyToOne
 	@JsonIgnore
 	private User user;
 	
-	@OneToMany(mappedBy = "address")
-	@JsonIgnore
-	private List<Order> orders;
+	@ManyToOne
+	private Address address;
+	
+	@OneToMany(mappedBy = "order")
+	private List<OrderItem> orderItems;
+	
 }

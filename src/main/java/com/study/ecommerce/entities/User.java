@@ -53,6 +53,9 @@ public class User implements UserDetails {
 	
 	@OneToMany(mappedBy = "user")
 	private List<Address> addresses;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Order> orders;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
